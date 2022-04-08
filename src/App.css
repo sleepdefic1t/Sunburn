@@ -25,3 +25,10 @@ main {
   line-height: 20px;
   padding-left: 25px;
 }
+
+.footer {
+  align-text: center;
+  font-size: 16px;
+  margin: auto;
+  padding-top: 35px;
+}

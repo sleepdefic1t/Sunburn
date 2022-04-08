@@ -47,7 +47,10 @@ export default function App() {
       </span><br />
       <span className="totals"><b>Block Height:</b> {height}</span><br />
       <span className="totals"><b>Total Supply:</b> {supply}</span><br />
-      <span className="totals"><b>Total Burned:</b> {burned}</span>
+      <span className="totals"><b>Total Burned:</b> {burned}</span><br />
+      <span className="footer">
+        dreamed by <a href="https://delegates.solar.org/sxp/delegates/sl33p" target="_blank" rel="noopener noreferrer">₴Ⱡ33₱</a> | 🔌 by <a href="https://solar.org" target="_blank" rel="noopener noreferrer">Solar</a>
+      </span>
     </main>
   )
 }
