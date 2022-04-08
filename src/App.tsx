@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import fetch from 'cross-fetch';
 import { ethers, BigNumber } from "ethers";
 
-import logo from "./logo.png";
+import logo from "./assets/logo.png";
 
 export default function App() {
   const apiBlockchain: string = "https://sxp.mainnet.sh/api/blockchain";
