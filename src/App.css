@@ -1,0 +1,27 @@
+main {
+  text-align: left;
+  padding-top: 50px;
+  padding-left: 10px;
+  max-width: 720px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.logo {
+  padding-bottom: 20px;
+  padding-left: 10px;
+  align-items: center;
+  margin: auto;
+}
+
+.token {
+  font-size: 32px;
+}
+
+.totals {
+  font-size: 18px;
+  line-height: 20px;
+  padding-left: 25px;
+}
