@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import fetch from 'cross-fetch';
 import { ethers, BigNumber } from "ethers";
 
+import logo from "./logo.png";
+
 export default function App() {
   const apiBlockchain: string = "https://sxp.mainnet.sh/api/blockchain";
   const [height, setHeight] = useState("");
@@ -43,7 +45,7 @@ export default function App() {
   return (
     <main>
       <span className="logo">
-        <img src="https://gateway.pinata.cloud/ipfs/QmPQbgNq8vdxpbacYpqFRFvapCdhXMcYwRP3qEFqinyn6z" width="300px" alt="solar logo" />
+        <img src={logo} width="300px" alt="solar logo" />
       </span><br />
       <span className="totals"><b>Block Height:</b> {height}</span><br />
       <span className="totals"><b>Total Supply:</b> {supply}</span><br />
