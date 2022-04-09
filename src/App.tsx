@@ -39,6 +39,16 @@ export default function App() {
 
     getInfo();
   }, [setHeight, setSupply, setBurned]);
+  
+  // Timer (refresh values every 8 seconds
+  const [time, setTime] = useState(Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 8000);
+      return () => {
+        clearInterval(interval);
+      };
+  }, []); 
 
   return (
     <main>
