@@ -2,53 +2,63 @@ import * as React from 'react'
 import './App.css'
 import { useState, useEffect } from 'react';
 
+// TODO: Use Solar packages
 import fetch from 'cross-fetch';
 import { ethers, BigNumber } from "ethers";
 
 export default function App() {
+
   const apiBlockchain: string = "https://sxp.mainnet.sh/api/blockchain";
   const [height, setHeight] = useState("");
   const [burned, setBurned] = useState("");
   const [supply, setSupply] = useState("");
 
+  // TODO: Use Solar packages
+  const getInfo = async () => {
+    try {
+      const response = await fetch(apiBlockchain);
+
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+
+      const result = await response.json();
+
+      const heightStr: string = result.data.block.height;
+      setHeight(ethers.utils.commify(heightStr));
+
+      const totalSupply: BigNumber = BigNumber.from(result.data.supply);
+      const supplyStr: string = String(ethers.utils.formatUnits(totalSupply, 8));
+      setSupply(ethers.utils.commify(supplyStr));
+
+      const totalBurned: BigNumber = BigNumber.from(result.data.burned.total);
+      const burnStr: string = ethers.utils.formatUnits(totalBurned, 8);
+      setBurned(ethers.utils.commify(burnStr));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+ 
+  // Timer (getInfo at page load and every 8 seconds)
+  const [count, setCount] = useState(0);
+
   useEffect(() => {
-    const getInfo = async () => {
+    const update = async () => {
       try {
-        const response = await fetch(apiBlockchain);
+        await getInfo();
+        const timer: ReturnType<typeof setInterval> = setInterval(async () => {
+          await getInfo();
+          setCount(prevCount => prevCount + 1);
+        }, 8000);
 
-        if (response.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-
-        const result = await response.json();
-
-        const heightStr: string = result.data.block.height;
-        setHeight(ethers.utils.commify(heightStr));
-
-        const totalSupply: BigNumber = BigNumber.from(result.data.supply);
-        const supplyStr: string = String(ethers.utils.formatUnits(totalSupply, 8));
-        setSupply(ethers.utils.commify(supplyStr));
-
-        const totalBurned: BigNumber = BigNumber.from(result.data.burned.total);
-        const burnStr: string = ethers.utils.formatUnits(totalBurned, 8);
-        setBurned(ethers.utils.commify(burnStr));
-      } catch (err) {
-        console.error(err);
+        return () => clearInterval(timer);
+      } catch (error) {
+        console.error(error);
       }
     }
 
-    getInfo();
-  }, [setHeight, setSupply, setBurned]);
-  
-  // Timer (refresh values every 8 seconds
-  const [time, setTime] = useState(Date.now());
-
-  useEffect(() => {
-    const interval = setInterval(() => setTime(Date.now()), 8000);
-      return () => {
-        clearInterval(interval);
-      };
-  }, []); 
+    update();
+  }, [setCount]);
 
   return (
     <main>
